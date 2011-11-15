@@ -1,0 +1,156 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Microsoft.Xna.Framework;
+
+namespace Pipe
+{
+    public class Camera : Entity
+    {
+        protected Matrix view_matrix;
+        protected Matrix projection_matrix;
+        protected Vector3 camera_lookat;
+
+        protected float camera_fov = MathHelper.PiOver4;   //45°
+        protected float near_plane = 0.1f;
+        protected float far_plane = 10000f;
+
+        protected float rotation_speed = 90.0f;
+        protected float move_speed = 60.0f;
+
+        internal bool need_update;
+
+        internal Camera(PipeEngine engine, Vector3 position, Vector3 target, float near_plane, float far_plane )
+            : base(engine)
+        {
+            this.near_plane = near_plane;
+            this.far_plane = far_plane;
+            this.pose.SetPosition(ref position);
+            this.camera_lookat = target;
+        }
+
+        public Camera(PipeEngine engine, Vector3 position, Vector3 target)
+            : this(engine, position, target, 0.1f, 10000f)
+        {
+
+        }
+
+        public override void Initialize()
+        {
+            LookAt = camera_lookat;
+            UpdateViewMatrix(true);
+        }
+
+        public bool NeedUpdate 
+        { 
+            get { return need_update; } 
+            set { need_update = value; }
+        }
+
+        public float RotationSpeed
+        {
+            get { return rotation_speed; }
+            set { rotation_speed = value; }
+        }
+
+        public float MovementSpeed
+        {
+            get { return move_speed; }
+            set { move_speed = value; }
+        }
+
+        public float Fov
+        {
+            get { return camera_fov; }
+            set 
+            { 
+                camera_fov = value;
+                UpdateViewMatrix(true);
+            }
+        }
+
+        public float FarPlane
+        {
+            get { return far_plane; }
+            set
+            {
+                far_plane = value;
+                UpdateViewMatrix(true);
+            }
+        }
+
+        public float NearPlane
+        {
+            get { return near_plane; }
+            set { near_plane = value; UpdateViewMatrix(true);  }
+        }
+
+        public float AspectRatio
+        {
+            get { return Engine.GraphicsDevice.Viewport.AspectRatio; }
+        }
+
+        public Vector3 Position
+        {
+            get { return Pose.position; }
+            set { Pose.position = value; }
+        }
+
+        public Vector3 LookAt
+        {
+            get { return camera_lookat; }
+            set
+            {
+                camera_lookat = value;
+                Matrix billboard_matrix = Matrix.CreateBillboard(Pose.position, camera_lookat, Vector3.Up, Vector3.Forward);
+                Quaternion rot2target = Quaternion.CreateFromRotationMatrix(billboard_matrix);
+                Pose.rotation = rot2target;
+            }
+        }
+
+        public Matrix ProjectionMatrix
+        {
+            get { return projection_matrix; }
+        }
+        public Matrix ViewMatrix
+        {
+            get { return view_matrix; }
+        }
+
+        public virtual void UpdateViewMatrix(bool update_projection)
+        {
+            Matrix rot_mat = Matrix.CreateFromQuaternion(Pose.rotation);
+            Vector3 up = Vector3.Transform(Vector3.Up, rot_mat);
+
+            camera_lookat = Vector3.Transform(Vector3.Forward, rot_mat);
+            camera_lookat += Pose.position;
+
+            view_matrix = Matrix.CreateLookAt(pose.position, camera_lookat, up);
+
+            if(update_projection)
+            {
+                projection_matrix = Matrix.CreatePerspectiveFieldOfView(camera_fov, AspectRatio, near_plane, far_plane);
+            }
+
+            need_update = true;
+        }
+
+        /// <summary>
+        /// 将前后移动的速度转化到相机空间，即相机空间的前后移动速度 
+        /// </summary>
+        /// <param name="speed"></param>
+        /// <returns></returns>
+        internal Vector3 GetMoveForwardVector(float speed)
+        {
+            Vector3 add_vector = Vector3.Transform(Vector3.Forward, pose.rotation);
+            return add_vector * speed;
+        }
+
+        public static Vector3 GetMoveVector(Quaternion rotation, Vector3 direction, float speed)
+        {
+            Vector3 add_vector = Vector3.Transform(direction, rotation);
+            return add_vector * speed;
+        }
+    }
+}
