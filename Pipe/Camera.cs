@@ -69,7 +69,7 @@ namespace Pipe
 
             position = target + offset;
 
-            moving_speed = .5f;
+            moving_speed = 5f;
             rotation_speed = .02f;
             zoom_speed = 5.0f;
 

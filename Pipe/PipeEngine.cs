@@ -37,7 +37,6 @@ namespace Pipe
         private int fps = 0;
 
         private readonly SceneManager scm;
-        private Effect base_effect;
 
         private ConsoleComponent console;
 
@@ -74,10 +73,6 @@ namespace Pipe
             get { return graphics; }
         }
 
-        public Effect BaseEffect
-        {
-            get { return base_effect; }
-        }
         public static SpriteBatch SpriteBatch
         {
             get { return spriteBatch; }
@@ -127,7 +122,6 @@ namespace Pipe
             spriteBatch = new SpriteBatch(GraphicsDevice);
             spriteFont = Content.Load<SpriteFont>("Fonts\\default_font");
             cursor = Content.Load<Texture2D>("Textures\\MouseCursor");
-            base_effect = Content.Load<Effect>("Effects\\Generic");
 
             GraphicsDevice.RenderState.FogEnable = false;
             GraphicsDevice.RenderState.FillMode = FillMode.WireFrame;

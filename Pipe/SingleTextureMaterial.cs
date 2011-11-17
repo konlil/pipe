@@ -7,88 +7,57 @@ using Microsoft.Xna.Framework;
 
 namespace Pipe
 {
-    public class SingleTextureMaterial : IMaterial
+    public class SingleTextureMaterial : BaseMaterial
     {
-        PipeEngine engine;
-        
-        protected Effect effect;
-        protected string current_technique_name;
-        protected string texture_name;
+        protected string diffuse_texture_name;
+        protected string detail_texture_name;
 
         public SingleTextureMaterial(PipeEngine engine, string effect_name)
+            :base(engine,effect_name)
         {
-            this.engine = engine;
-
-            Effect eff = engine.Content.Load<Effect>(effect_name);
-            this.effect = eff.Clone(engine.GraphicsDevice);
-            this.current_technique_name = effect.Techniques[0].Name;
-            this.effect.CurrentTechnique = effect.Techniques[0];
         }
 
         public SingleTextureMaterial(PipeEngine engine, Effect eff)
+            :base(engine, eff)
         {
-            this.engine = engine;
-            this.effect = eff.Clone(engine.GraphicsDevice);
-            this.current_technique_name = effect.Techniques[0].Name;
-            this.effect.CurrentTechnique = effect.Techniques[0];
         }
 
-        #region IMaterial Members
-
-        public Effect EffectInstance
+        public string DiffuseTextureName
         {
-            get { return effect; }
-        }
-
-        public string CurrentTechniqueName
-        {
-            get
-            {
-                return current_technique_name; 
-            }
+            get { return diffuse_texture_name; }
             set
             {
-                if(current_technique_name != value)
+                diffuse_texture_name = value;
+                if(string.IsNullOrEmpty(diffuse_texture_name))
                 {
-                    current_technique_name = value;
-                    effect.CurrentTechnique = effect.Techniques[current_technique_name];
-                }
-            }
-        }
-
-        public string TextureName
-        {
-            get { return texture_name; }
-            set
-            {
-                texture_name = value;
-                if(string.IsNullOrEmpty(texture_name))
-                {
-                    EffectInstance.Parameters["Tex0"].SetValue((Texture2D)null); 
+                    EffectInstance.Parameters["DiffuseTexture"].SetValue((Texture2D)null); 
                 }
                 else
                 {
-                    Texture2D texture = engine.Content.Load<Texture2D>(texture_name);
-                    EffectInstance.Parameters["Tex0"].SetValue(texture);
+                    Texture2D texture = engine.Content.Load<Texture2D>(diffuse_texture_name);
+                    EffectInstance.Parameters["DiffuseTexture"].SetValue(texture);
                 }
             }
         }
 
-        public void SetWorldMatrix(Matrix world)
+        public string DetailTextureName
         {
-            EffectInstance.Parameters["World"].SetValue(world); 
+            get { return detail_texture_name; }
+            set
+            {
+                detail_texture_name = value;
+                if(string.IsNullOrEmpty(detail_texture_name))
+                {
+                    EffectInstance.Parameters["DetailTexture"].SetValue((Texture2D)null);
+                    EffectInstance.Parameters["DetailEnabled"].SetValue(false);
+                }
+                else
+                {
+                    Texture2D texture = engine.Content.Load<Texture2D>(detail_texture_name);
+                    EffectInstance.Parameters["DetailTexture"].SetValue(texture);
+                    EffectInstance.Parameters["DetailEnabled"].SetValue(true);
+                }
+            }
         }
-
-        public void SetViewMatrix( Matrix view)
-        {
-            EffectInstance.Parameters["View"].SetValue(view); 
-        }
-
-        public void SetProjectionMatrix(Matrix projection)
-        {
-            EffectInstance.Parameters["Projection"].SetValue(projection); 
-        }
-
-        #endregion
     }
 }

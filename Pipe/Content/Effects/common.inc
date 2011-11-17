@@ -31,6 +31,8 @@ sampler	SamplerDiffuse = sampler_state
 	MinFilter =	LINEAR;
 	MagFilter =	LINEAR;
 	MipMapLodBias = -2.5f;
+	AddressU = WRAP;
+	AddressV = WRAP;
 };
 
 texture	DetailTexture 
@@ -45,4 +47,6 @@ sampler	SamplerDetail = sampler_state
 	MinFilter =	LINEAR;
 	MagFilter =	LINEAR;
 	MipMapLodBias = -2.5f;
+	AddressU = WRAP;
+	AddressV = WRAP;
 };

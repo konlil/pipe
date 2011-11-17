@@ -13,7 +13,7 @@ namespace Pipe
         Texture2D height_map;
         private float min_height = float.MaxValue;
         private float max_height = float.MinValue;
-        private float height_limit = 0;
+        private float height_limit = 200;
         private float grid_size = 8;
 
         private int terrain_width;
@@ -82,8 +82,8 @@ namespace Pipe
 
             Mesh mesh = new Mesh(PrimitiveType.TriangleStrip, vb, vd, ib);
             base.AddMesh(mesh);
-    
-            BasicMaterial default_material = new BasicMaterial(Engine);
+
+            GenericMaterial default_material = new GenericMaterial(Engine, "Effects\\generic");
             base.AddMaterial(default_material);
 
             RenderContext ctx = new RenderContext(Engine);
@@ -92,7 +92,9 @@ namespace Pipe
             base.AddRenderContext(ctx);
 
             default_material.DiffuseTextureName = "Textures\\grass";
-
+            default_material.FogEnabled = true;
+            default_material.FogColor = new Color(1.0f, 1.0f, 1.0f).ToVector4();
+            default_material.DiffuseUVTile = new Vector2(256, 256);
         }
 
         private VertexPositionTexture[] CreateTerrainVertices()
@@ -106,6 +108,7 @@ namespace Pipe
                 {
                     Vector3 position = new Vector3(x*grid_size, height_data[x, z], -z*grid_size);
                     Vector3 normal = new Vector3(0, 1, 0);
+
                     Vector2 texcoord = new Vector2((float)x / terrain_width, (float)z / terrain_height);
 
                     //vertices[i++] = new VertexPositionTexture(position, normal, texcoord);

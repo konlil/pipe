@@ -83,14 +83,14 @@ namespace Pipe
             Vector3 v7 = new Vector3(1.0f, -1.0f, -1.0f);
             Vector3 v8 = new Vector3(-1.0f, -1.0f, -1.0f);
 
-            //5, 1, 2, 6
+            #region     //5, 1, 2, 6
             vertices[0].position = v5;
-            vertices[0].texcoord = new Vector2(0, 1);
+            vertices[0].texcoord = new Vector2(0, 0);
             vertices[0].normal = Vector3.Backward;
             vertices[0].color = Color.White;
 
             vertices[1].position = v1;
-            vertices[1].texcoord = new Vector2(0, 0);
+            vertices[1].texcoord = new Vector2(0, 1);
             vertices[1].normal = Vector3.Backward;
             vertices[1].color = Color.White;
 
@@ -103,15 +103,16 @@ namespace Pipe
             vertices[3].texcoord = new Vector2(1, 0);
             vertices[3].normal = Vector3.Backward;
             vertices[3].color = Color.White;
+            #endregion
 
-            //8, 4, 3, 7
+            #region            //8, 4, 3, 7
             vertices[4].position = v8;
-            vertices[4].texcoord = new Vector2(0, 1);
+            vertices[4].texcoord = new Vector2(0, 0);
             vertices[4].normal = Vector3.Forward;
             vertices[4].color = Color.White;
 
             vertices[5].position = v4;
-            vertices[5].texcoord = new Vector2(0, 0);
+            vertices[5].texcoord = new Vector2(0, 1);
             vertices[5].normal = Vector3.Forward;
             vertices[5].color = Color.White;
 
@@ -124,36 +125,39 @@ namespace Pipe
             vertices[7].texcoord = new Vector2(1, 0);
             vertices[7].normal = Vector3.Forward;
             vertices[7].color = Color.White;
+            #endregion
 
-            //5, 1, 4, 8
+            #region //5, 1, 4, 8
+            
             vertices[8].position = v5;
-            vertices[8].texcoord = new Vector2(0, 1);
+            vertices[8].texcoord = new Vector2(1, 0);
             vertices[8].normal = Vector3.Left;
             vertices[8].color = Color.White;
 
             vertices[9].position = v1;
-            vertices[9].texcoord = new Vector2(0, 0);
+            vertices[9].texcoord = new Vector2(1, 1);
             vertices[9].normal = Vector3.Left;
             vertices[9].color = Color.White;
 
             vertices[10].position = v4;
-            vertices[10].texcoord = new Vector2(1, 1);
+            vertices[10].texcoord = new Vector2(0, 1);
             vertices[10].normal = Vector3.Left;
             vertices[10].color = Color.White;
 
             vertices[11].position = v8;
-            vertices[11].texcoord = new Vector2(1, 0);
+            vertices[11].texcoord = new Vector2(0, 0);
             vertices[11].normal = Vector3.Left;
             vertices[11].color = Color.White;
+            #endregion
 
-            //6, 2, 3, 7
+            #region            //6, 2, 3, 7
             vertices[12].position = v6;
-            vertices[12].texcoord = new Vector2(0, 1);
+            vertices[12].texcoord = new Vector2(0, 0);
             vertices[12].normal = Vector3.Right;
             vertices[12].color = Color.White;
 
             vertices[13].position = v2;
-            vertices[13].texcoord = new Vector2(0, 0);
+            vertices[13].texcoord = new Vector2(0, 1);
             vertices[13].normal = Vector3.Right;
             vertices[13].color = Color.White;
 
@@ -166,15 +170,16 @@ namespace Pipe
             vertices[15].texcoord = new Vector2(1, 0);
             vertices[15].normal = Vector3.Right;
             vertices[15].color = Color.White;
+            #endregion
 
-            //5, 8, 7, 6
+            #region            //5, 8, 7, 6
             vertices[16].position = v5;
-            vertices[16].texcoord = new Vector2(0, 1);
+            vertices[16].texcoord = new Vector2(0, 0);
             vertices[16].normal = Vector3.Down;
             vertices[16].color = Color.White;
 
             vertices[17].position = v8;
-            vertices[17].texcoord = new Vector2(0, 0);
+            vertices[17].texcoord = new Vector2(0, 1);
             vertices[17].normal = Vector3.Down;
             vertices[17].color = Color.White;
 
@@ -187,15 +192,16 @@ namespace Pipe
             vertices[19].texcoord = new Vector2(1, 0);
             vertices[19].normal = Vector3.Down;
             vertices[19].color = Color.White;
+            #endregion
 
-            //1, 4, 3, 2
+            #region            //1, 4, 3, 2
             vertices[20].position = v1;
-            vertices[20].texcoord = new Vector2(0, 1);
+            vertices[20].texcoord = new Vector2(0, 0);
             vertices[20].normal = Vector3.Up;
             vertices[20].color = Color.White;
 
             vertices[21].position = v4;
-            vertices[21].texcoord = new Vector2(0, 0);
+            vertices[21].texcoord = new Vector2(0, 1);
             vertices[21].normal = Vector3.Up;
             vertices[21].color = Color.White;
 
@@ -208,9 +214,10 @@ namespace Pipe
             vertices[23].texcoord = new Vector2(1, 0);
             vertices[23].normal = Vector3.Up;
             vertices[23].color = Color.White;
+            #endregion
 #endregion
 
-#region 索引数组
+            #region 索引数组
             //创建36个索引
             ushort[] indices = {
                                    0, 1, 3,

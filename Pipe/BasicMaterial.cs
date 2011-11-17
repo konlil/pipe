@@ -15,6 +15,14 @@ namespace Pipe
         string current_technique_name;
         string diffuse_texture_name;
 
+        //local fog info
+        protected bool fog_enabled;
+        protected Vector3 fog_color;
+        protected float fog_start;
+        protected float fog_end;
+
+        protected EnvInfo env_info;
+
         public BasicMaterial(PipeEngine engine)
         {
             this.engine = engine;
@@ -102,6 +110,16 @@ namespace Pipe
             set;
         }
 
+        public bool FogEnabled
+        {
+            get { return fog_enabled; }
+            set
+            {
+                fog_enabled = value;
+                basic_effect.FogEnabled = value && env_info.fog_info.enabled;
+            }
+        }
+
         public void SetWorldMatrix(Matrix world)
         {
             basic_effect.World = world; 
@@ -115,6 +133,11 @@ namespace Pipe
         public void SetProjectionMatrix(Matrix projection)
         {
             basic_effect.Projection = projection;
+        }
+
+        public void SetEnvInfo(EnvInfo info)
+        {
+            env_info = info;
         }
 
         #endregion

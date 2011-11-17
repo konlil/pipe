@@ -23,5 +23,7 @@ namespace Pipe
         void SetWorldMatrix(Matrix world);
         void SetViewMatrix(Matrix view);
         void SetProjectionMatrix(Matrix projection);
+        
+        void SetEnvInfo(EnvInfo fog_info);
     }
 }

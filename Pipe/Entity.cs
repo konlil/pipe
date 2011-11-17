@@ -85,6 +85,14 @@ namespace Pipe
             render_contexts.Add(ctx);
             return render_contexts.Count - 1;
         }
+
+        public void ApplyEnvInfo(EnvInfo info)
+        {
+            foreach(RenderContext rc in render_contexts)
+            {
+                rc.Material.SetEnvInfo(info);
+            }
+        }
         
         public virtual int Draw(GameTime gametime, Camera camera)
         {

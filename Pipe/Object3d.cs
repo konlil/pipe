@@ -72,6 +72,16 @@ namespace Pipe
 
         public abstract void Initialize();
 
+        public void SetScale(float sx, float sy, float sz)
+        {
+            this.pose.SetScale(sx, sy, sz);
+        }
+
+        public void SetPosition(float px, float py, float pz)
+        {
+            this.pose.SetPosition(px, py, pz);
+        }
+
         public virtual void Update(GameTime gametime)
         {
             if( controllers.Count > 0 )

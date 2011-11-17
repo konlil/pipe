@@ -101,6 +101,7 @@
     <Compile Include="Controller.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="DrawMode.cs" />
+    <Compile Include="GenericMaterial.cs" />
     <Compile Include="SingleTextureMaterial.cs" />
     <Compile Include="Object3d.cs" />
     <Compile Include="FpsCameraController.cs" />

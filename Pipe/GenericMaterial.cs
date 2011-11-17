@@ -65,11 +65,14 @@ namespace Pipe
         /// </summary>
         protected bool fogEnabled = false;
 
+        protected Vector4 fogColor = new Color(1.0f, 1.0f, 1.0f).ToVector4();
+
         #endregion
 
         private void InitEffect()
         {
-            effect.Parameters["DiffuseTextureEnabled"].SetValue(false);
+            effect.Parameters["DiffuseEnabled"].SetValue(false);
+            effect.Parameters["DetailEnabled"].SetValue(false);
 
             effect.Parameters["MaterialDiffuse"].SetValue(diffuseColor);
             effect.Parameters["MaterialSpecular"].SetValue(specularColor);
@@ -158,13 +161,13 @@ namespace Pipe
                 {
                     diffuseTexture = null;
                     effect.Parameters["DiffuseTexture"].SetValue((Texture)null);
-                    effect.Parameters["DiffuseTextureEnabled"].SetValue(false );
+                    effect.Parameters["DiffuseEnabled"].SetValue(false );
                 }
                 else
                 {
                     diffuseTexture = engine.Content.Load<Texture2D>(diffuseTextureName);
                     effect.Parameters["DiffuseTexture"].SetValue(diffuseTexture);
-                    effect.Parameters["DiffuseTextureEnabled"].SetValue(true);
+                    effect.Parameters["DiffuseEnabled"].SetValue(true);
                 }
             }
         }
@@ -196,11 +199,13 @@ namespace Pipe
                 {
                     detailTexture = null;
                     effect.Parameters["DetailTexture"].SetValue((Texture)null);
+                    effect.Parameters["DetailEnabled"].SetValue(false);
                 }
                 else
                 {
                     detailTexture = engine.Content.Load<Texture2D>(detailTextureName); 
                     effect.Parameters["DetailTexture"].SetValue(detailTexture);
+                    effect.Parameters["DetailEnabled"].SetValue(true);
                 }
             }
         }
@@ -218,17 +223,12 @@ namespace Pipe
             }
         }
 
-        /// <summary>
-        /// 获取或设置是否进行雾化，默认为false。
-        /// </summary>
-        public bool FogEnabled
+        public Vector4 FogColor
         {
-            get { return fogEnabled; }
+            get { return fogColor; }
             set
             {
-                fogEnabled = value;
-                //只有在场景的FogEnabled开启并且节点本身的fogEnabled开启的情况下才进行雾化计算
-                effect.Parameters["FogEnabled"].SetValue(fogEnabled);
+                effect.Parameters["FogColor"].SetValue(fogColor);
             }
         }
 

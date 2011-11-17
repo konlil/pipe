@@ -55,9 +55,9 @@ namespace Pipe
             axis.Pose.SetScale(10, 10, 10);
 
             ////////////////////////////////我是忧郁的分割线//////////////////////////////////////////
-            //Terrain terrain = new Terrain(this, "Textures\\heightmap1", null);
-            //terrain.Initialize();
-            //scene.AddEntity(terrain);
+            Terrain terrain = new Terrain(this, "Textures\\Eire", null);
+            terrain.Initialize();
+            scene.AddEntity(terrain);
 
             //camera.Target = new Vector3(terrain.WidthInPixel / 2.0f, 0, -terrain.HeightInPixel / 2.0f);
             camera.Target = new Vector3(0, 0, 0);
@@ -79,12 +79,33 @@ namespace Pipe
             //a1.pose.SetScale(0.01f, 0.01f, 0.01f);
 
             //////////////////////////////////////////////////////////////////////////
+            Light l1 = new Light(this, new Vector3(1.0f, 0.0f, 0.0f), new Vector3(1.0f, -1.0f, -1.0f));
+            scene.AddLight(l1);
+
+            //////////////////////////////////////////////////////////////////////////
             Box b1 = new Box(this);
             b1.Initialize();
             scene.AddEntity(b1);
 
             b1.pose.SetScale(10.0f, 10.0f, 10.0f);
-            b1.pose.SetPosition(0, 10, 0);
+            b1.pose.SetPosition(100, 10, -100);
+
+            Box b2 = new Box(this);
+            b2.Initialize();
+            scene.AddEntity(b2);
+
+            b2.SetScale(10, 10, 10);
+            b2.SetPosition(150, 10, -150);
+
+            GenericMaterial mat_b2 = new GenericMaterial(this, "Effects\\generic");
+            mat_b2.CurrentTechniqueName = "TGeneric";
+            mat_b2.DiffuseTextureName = "Textures\\wood";
+            mat_b2.EmissiveColor = new Vector3(0.1f, 0.1f, 0.1f);
+            mat_b2.SpecularColor = new Vector3(0.0f, 1.0f, 0.0f);
+            mat_b2.SpecularPower = 60.0f;
+            mat_b2.FogEnabled = true;
+
+            b2.Context.Material = mat_b2;
 
         }
 

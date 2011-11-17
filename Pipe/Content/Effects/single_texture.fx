@@ -1,21 +1,6 @@
-float4x4 World;
-float4x4 View;
-float4x4 Projection;
+#include "common.inc"
+#include "fog.inc"
 
-texture	DiffuseTexture 
-<
-	string SasUiLabel = "颜色贴图"; 
-	string SasUiControl = "FilePicker";
->;
-
-sampler	SamplerDiffuse = sampler_state
-{
-	Texture	  =	(DiffuseTexture);
-	MipFilter =	LINEAR;
-	MinFilter =	LINEAR;
-	MagFilter =	LINEAR;
-	MipMapLodBias = -2.5f;
-};
 
 struct SingleTexture_VSInput
 {
@@ -27,6 +12,8 @@ struct SingleTexture_VSOutput
 {
     float4 Position : POSITION0;
     float2 TexCoord : TEXCOORD0;
+    
+    float3 WorldPosition : TEXCOORD1;  //用于雾化
 };
 
 SingleTexture_VSOutput SingleTextureVS(SingleTexture_VSInput input)
@@ -37,17 +24,41 @@ SingleTexture_VSOutput SingleTextureVS(SingleTexture_VSInput input)
 
     output.Position = mul(input.Position, wvp);
 	output.TexCoord = input.TexCoord;
+	
+	//计算世界空间的坐标
+	float4 world_pos = mul(input.Position, World);
+	output.WorldPosition = world_pos/world_pos.w;
 
     return output;
 }
 
 float4 SingleTexturePS(SingleTexture_VSOutput input) : COLOR0
 {
-	float4 final = 0;
+	float4 diffuse = 0;
+	float4 detail = 0;
+	float3 final = 0;
 	
-	final = tex2D(SamplerDiffuse, input.TexCoord);
+	//自发光
+	diffuse = float4(MaterialDiffuse, 1.0f);
+	if(DiffuseEnabled)
+	{
+		diffuse = tex2D(SamplerDiffuse, input.TexCoord);
+	}
 
-    return final;
+	if(DetailEnabled)
+	{	
+		detail = tex2D(SamplerDetail, input.TexCoord);
+		diffuse.rgb *= detail.rgb;
+	}
+
+	//环境光 & 漫反射
+	final += (AmbientColor * diffuse.rgb);
+	final += MaterialEmissive;
+	
+	//if(FogEnabled)
+	//	final.rgb = LinearFog(final.rgb, input.WorldPosition);
+
+    return float4(final, diffuse.a);
 }
 
 technique TSingleTexture 
@@ -58,6 +69,6 @@ technique TSingleTexture
 	pass p0
 	{
 		VertexShader = compile vs_1_1 SingleTextureVS();
-        PixelShader = compile ps_1_1 SingleTexturePS();
+        PixelShader = compile ps_2_0 SingleTexturePS();
 	}
 }
