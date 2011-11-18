@@ -1,33 +1,37 @@
-锘縰sing System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
-using Angella.ConsoleComponent;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Net;
+using Microsoft.Xna.Framework.Storage;
+using Pipe;
 
-namespace Pipe
+namespace TestGame1
 {
-    class TestGame : PipeEngine
+    /// <summary>
+    /// This is the main type for your game
+    /// </summary>
+    public class Game1 : PipeEngine
     {
-        public TestScene scene;
+        Scene scene;
         Camera camera;
-
         Script script;
 
-        public TestGame()
+        public Game1()
         {
-            this.Window.Title = "test scene";
-
-            script = new Script();
-            script.DoFile("scripts\\test.lua");
         }
 
         protected override void Initialize()
         {
             base.Initialize();
 
-            scene = new TestScene(this);
+            scene = new Scene(this, 0, "test");
             Scm.AddScene(scene);
             Scm.SetActiveScene(scene);
 
@@ -41,7 +45,7 @@ namespace Pipe
              */
             camera = new Camera(this);
             scene.ActiveCamera = camera;
-           
+
 
             //camera_ctrl = new FpsCameraController(this);
             //cam.AttachController(camera_ctrl);
@@ -54,7 +58,7 @@ namespace Pipe
 
             axis.Pose.SetScale(10, 10, 10);
 
-            ////////////////////////////////鎴戞槸蹇ч儊鐨勫垎鍓茬嚎//////////////////////////////////////////
+            ////////////////////////////////我是忧郁的分割线//////////////////////////////////////////
             Terrain terrain = new Terrain(this, "Textures\\heightmap2", null);
             terrain.Initialize();
             scene.AddEntity(terrain);
@@ -87,8 +91,8 @@ namespace Pipe
             b1.Initialize();
             scene.AddEntity(b1);
 
-            b1.pose.SetScale(10.0f, 10.0f, 10.0f);
-            b1.pose.SetPosition(100, 10, -100);
+            b1.SetScale(10.0f, 10.0f, 10.0f);
+            b1.SetPosition(100, 10, -100);
 
             Box b2 = new Box(this);
             b2.Initialize();
@@ -117,6 +121,6 @@ namespace Pipe
         protected override void Draw(GameTime gametime)
         {
             base.Draw(gametime);
-        }
+        } 
     }
 }

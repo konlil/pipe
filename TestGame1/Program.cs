@@ -1,6 +1,6 @@
 using System;
 
-namespace Game
+namespace TestGame1
 {
     static class Program
     {
@@ -9,7 +9,7 @@ namespace Game
         /// </summary>
         static void Main(string[] args)
         {
-            using (PipeGame game = new PipeGame())
+            using (Game1 game = new Game1())
             {
                 game.Run();
             }

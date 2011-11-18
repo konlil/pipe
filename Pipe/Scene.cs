@@ -57,7 +57,7 @@ namespace Pipe
         }
     }
 
-    public abstract class Scene
+    public class Scene
     {
         protected PipeEngine engine;
         protected List<Entity> entities;

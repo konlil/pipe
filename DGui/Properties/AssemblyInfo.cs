@@ -5,12 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Game")]
-[assembly: AssemblyProduct("Game")]
+[assembly: AssemblyTitle("DGui")]
+[assembly: AssemblyProduct("DGui")]
 [assembly: AssemblyDescription("")]
-[assembly: AssemblyCompany("WwW.YlmF.CoM")]
-
-[assembly: AssemblyCopyright("Copyright © WwW.YlmF.CoM 2011")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyCopyright("Copyright ©  2010")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,8 +19,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("3eda007b-1211-4734-9864-bf8565ce519a")]
-
+[assembly: Guid("045cc12f-7a00-4aaa-9c88-d55c4e765333")]
 
 // Version information for an assembly consists of the following four values:
 //

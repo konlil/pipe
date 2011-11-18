@@ -1,17 +1,17 @@
 ﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
-    <ProjectGuid>{B4BA0CC5-48F7-4E6F-9C1E-A04706F190A3}</ProjectGuid>
+    <ProjectGuid>{7EC5BECC-40BC-4F84-96AE-EB08B744AFE6}</ProjectGuid>
     <ProjectTypeGuids>{6D335F3A-9D43-41b4-9D22-F6F17C4BE596};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <OutputType>Library</OutputType>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Pipe</RootNamespace>
-    <AssemblyName>Pipe</AssemblyName>
+    <RootNamespace>TestGame1</RootNamespace>
+    <AssemblyName>TestGame1</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <XnaFrameworkVersion>v3.1</XnaFrameworkVersion>
     <XnaPlatform>Windows</XnaPlatform>
-    <XnaCrossPlatformGroupID>46eeeed0-bcf8-466f-bf94-fc8f97723c21</XnaCrossPlatformGroupID>
+    <XnaCrossPlatformGroupID>bc943719-12da-4683-aa93-192dc59f173f</XnaCrossPlatformGroupID>
     <ApplicationIcon>Game.ico</ApplicationIcon>
     <Thumbnail>GameThumbnail.png</Thumbnail>
     <PublishUrl>publish\</PublishUrl>
@@ -29,8 +29,6 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <StartupObject>
-    </StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -58,10 +56,6 @@
     <XnaCompressContent>true</XnaCompressContent>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="LuaInterface, Version=2.0.0.16708, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\LuaInterface.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Xna.Framework, Version=3.1.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86">
       <Private>False</Private>
       <SpecificVersion>True</SpecificVersion>
@@ -76,7 +70,6 @@
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.Data" />
     <Reference Include="System.Xml">
       <Private>False</Private>
     </Reference>
@@ -90,40 +83,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Avatar.cs" />
-    <Compile Include="Axis.cs" />
-    <Compile Include="BaseDefine.cs" />
-    <Compile Include="BaseMaterial.cs" />
-    <Compile Include="BasicMaterial.cs" />
-    <Compile Include="Box.cs" />
-    <Compile Include="Camera.cs" />
-    <Compile Include="CameraBase.cs" />
-    <Compile Include="ConsoleComponent.cs" />
-    <Compile Include="Controller.cs" />
-    <Compile Include="Entity.cs" />
-    <Compile Include="DrawMode.cs" />
-    <Compile Include="GenericMaterial.cs" />
-    <Compile Include="SingleTextureMaterial.cs" />
-    <Compile Include="Object3d.cs" />
-    <Compile Include="FpsCameraController.cs" />
-    <Compile Include="IController.cs" />
-    <Compile Include="IMaterial.cs" />
-    <Compile Include="Input.cs" />
-    <Compile Include="Light.cs" />
-    <Compile Include="LuaReader.cs" />
-    <Compile Include="Mesh.cs" />
-    <Compile Include="MeshBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PipeEngine.cs" />
-    <Compile Include="Quad.cs" />
-    <Compile Include="RenderContext.cs" />
-    <Compile Include="Scene.cs" />
-    <Compile Include="SceneManager.cs" />
-    <Compile Include="Script.cs" />
-    <Compile Include="Terrain.cs" />
-    <Compile Include="UIEntity.cs" />
-    <Compile Include="Utility.cs" />
-    <Compile Include="WorldPose.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Game1.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
@@ -131,7 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <NestedContentProject Include="Content\Content.contentproj">
-      <Project>fcbbb8c4-4e15-4cc6-981f-8c42fc3eee47</Project>
+      <Project>bdc572d8-f3b0-4079-8489-2608e5b3fa92</Project>
       <Visible>False</Visible>
     </NestedContentProject>
   </ItemGroup>
@@ -163,19 +125,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DGui\DGui.csproj">
-      <Project>{6D6CB764-17CE-4CD2-9C61-7591D41FAE52}</Project>
-      <Name>DGui</Name>
+    <ProjectReference Include="..\Pipe\Pipe.csproj">
+      <Project>{B4BA0CC5-48F7-4E6F-9C1E-A04706F190A3}</Project>
+      <Name>Pipe</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LuaImporter\LuaImporter.csproj">
-      <Project>{236D982E-59F7-4CE7-A2CE-3187210237E1}</Project>
-      <Name>LuaImporter</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Scripts\test.lua">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
