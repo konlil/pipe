@@ -91,10 +91,12 @@ namespace Pipe
             ctx.Material = default_material;
             base.AddRenderContext(ctx);
 
-            default_material.DiffuseTextureName = "Textures\\grass";
+            default_material.DiffuseTextureName = "Textures\\terrain";
+            default_material.DetailTextureName = "Textures\\detail";
             default_material.FogEnabled = true;
-            default_material.FogColor = new Color(1.0f, 1.0f, 1.0f).ToVector4();
-            default_material.DiffuseUVTile = new Vector2(256, 256);
+            default_material.FogColor = new Color(0.5f, 0.5f, 0.5f).ToVector4();
+            default_material.DiffuseUVTile = new Vector2(1, 1);
+            default_material.DetailUVTile = new Vector2(128, 128);
         }
 
         private VertexPositionTexture[] CreateTerrainVertices()

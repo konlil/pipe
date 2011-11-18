@@ -55,7 +55,7 @@ namespace Pipe
             axis.Pose.SetScale(10, 10, 10);
 
             ////////////////////////////////我是忧郁的分割线//////////////////////////////////////////
-            Terrain terrain = new Terrain(this, "Textures\\Eire", null);
+            Terrain terrain = new Terrain(this, "Textures\\heightmap2", null);
             terrain.Initialize();
             scene.AddEntity(terrain);
 
@@ -79,8 +79,8 @@ namespace Pipe
             //a1.pose.SetScale(0.01f, 0.01f, 0.01f);
 
             //////////////////////////////////////////////////////////////////////////
-            Light l1 = new Light(this, new Vector3(1.0f, 0.0f, 0.0f), new Vector3(1.0f, -1.0f, -1.0f));
-            scene.AddLight(l1);
+            //Light l1 = new Light(this, new Vector3(1.0f, 0.0f, 0.0f), new Vector3(1.0f, -1.0f, -1.0f));
+            //scene.AddLight(l1);
 
             //////////////////////////////////////////////////////////////////////////
             Box b1 = new Box(this);

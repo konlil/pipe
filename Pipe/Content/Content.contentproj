@@ -145,6 +145,16 @@
       <Name>light</Name>
       <Importer>EffectImporter</Importer>
     </Content>
+    <Compile Include="Textures\terrain.jpg">
+      <Name>terrain</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\heightmap2.jpg">
+      <Name>heightmap2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Compile Include="Textures\Eire.png">
       <Name>Eire</Name>
       <Importer>TextureImporter</Importer>
