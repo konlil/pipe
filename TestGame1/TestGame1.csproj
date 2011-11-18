@@ -70,6 +70,7 @@
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Data" />
     <Reference Include="System.Xml">
       <Private>False</Private>
     </Reference>
@@ -83,6 +84,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MainUI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
@@ -125,6 +127,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DGui\DGui.csproj">
+      <Project>{6D6CB764-17CE-4CD2-9C61-7591D41FAE52}</Project>
+      <Name>DGui</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Pipe\Pipe.csproj">
       <Project>{B4BA0CC5-48F7-4E6F-9C1E-A04706F190A3}</Project>
       <Name>Pipe</Name>

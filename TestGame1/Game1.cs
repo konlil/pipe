@@ -23,6 +23,8 @@ namespace TestGame1
         Camera camera;
         Script script;
 
+        MainUI main_ui;
+
         public Game1()
         {
         }
@@ -30,6 +32,9 @@ namespace TestGame1
         protected override void Initialize()
         {
             base.Initialize();
+
+            main_ui = new MainUI(this);
+            main_ui.Initialize();
 
             scene = new Scene(this, 0, "test");
             Scm.AddScene(scene);
@@ -115,11 +120,15 @@ namespace TestGame1
 
         protected override void Update(GameTime gametime)
         {
+            main_ui.Update(gametime);
+            
             base.Update(gametime);
         }
 
         protected override void Draw(GameTime gametime)
         {
+            main_ui.Draw(gametime);
+
             base.Draw(gametime);
         } 
     }

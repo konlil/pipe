@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
 using Angella.ConsoleComponent;
+using DGui;
 
 namespace Pipe
 {
@@ -36,6 +37,7 @@ namespace Pipe
         private int FrameCountTotal = 0;
         private int fps = 0;
 
+        private DGuiManager gui_manager;
         private readonly SceneManager scm;
 
         private ConsoleComponent console;
@@ -60,6 +62,11 @@ namespace Pipe
         public SceneManager Scm
         {
             get { return scm; }
+        }
+
+        public DGuiManager GuiManager
+        {
+            get { return gui_manager; }
         }
 
         public Color BackgroundColor
@@ -139,6 +146,8 @@ namespace Pipe
             console = new ConsoleComponent(this, 17, Color.White);
             Components.Add(console);
 
+            gui_manager = new DGuiManager(this, spriteBatch);
+
             base.Initialize();
         }
 
@@ -181,6 +190,8 @@ namespace Pipe
             console.Clear();
 
             Input.Update();
+            gui_manager.Update(gameTime);
+
             scm.Update(gameTime);
 
             base.Update(gameTime);
@@ -233,8 +244,10 @@ namespace Pipe
                 GraphicsDevice.RenderState.FillMode = FillMode.Solid;
                 GraphicsDevice.RenderState.CullMode = CullMode.CullCounterClockwiseFace;
             }
-            
+
             scm.Draw(gameTime);
+            gui_manager.Draw(gameTime);
+            
             base.Draw(gameTime);
 
             UpdateFps(gameTime);

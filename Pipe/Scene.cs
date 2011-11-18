@@ -63,7 +63,6 @@ namespace Pipe
         protected List<Entity> entities;
         protected Camera active_camera;
 
-        protected bool fog_enabled;
         internal int scene_id;
         private string scene_name;
 
@@ -91,8 +90,8 @@ namespace Pipe
  
         public bool FogEnabled
         {
-            get { return fog_enabled; }
-            set { fog_enabled = value; }
+            get { return env_info.fog_info.enabled; }
+            set { env_info.fog_info.enabled = value; }
         }
 
         public virtual void Initialize()
