@@ -93,6 +93,21 @@ namespace Pipe
                 rc.Material.SetEnvInfo(info);
             }
         }
+
+        public void ApplyLight(Light light)
+        {
+            if(light.IsInRange(pose.position))
+            {
+                foreach(RenderContext rc in render_contexts)
+                {
+                    IMaterial imaterial = rc.Material;
+                    if( imaterial != null )
+                    {
+                        imaterial.SetLightInfo()
+                    }
+                }
+            }
+        }
         
         public virtual int Draw(GameTime gametime, Camera camera)
         {

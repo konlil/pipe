@@ -144,22 +144,29 @@ float3 CalcSingleLight(Light light, float3 world_position, float3 world_normal, 
 			attenuation = Attenuation(dist, range, falloff);
 		}
 		//聚光，且顶点位于光源范围内
-		else if( (type == LIGHT_TYPE_SPOT) && (range > dist) )
+		else if( type == LIGHT_TYPE_SPOT )
 		{
-			//距离衰减值
-			float dist_atten = Attenuation(dist, range, falloff);  //距离衰减
+			if( range > dist )
+			{
+				//距离衰减值
+				float dist_atten = Attenuation(dist, range, falloff);  //距离衰减
 		
-			//计算当前光源指向顶点方向和聚光灯光线方向的夹角Alpha的余弦值
-			float cos_alpha = saturate(dot(-dir_to_src, normalize(light.direction))	);
-			
-			//聚光灯内外锥的衰减
-			float spot_atten = 0.0f;
-			if( cos_alpha > cos_theta )
-				spot_atten = 1.0f;
-			else if ( cos_alpha > cos_phi )	//指数衰减
-				spot_atten = pow( (cos_alpha - cos_phi)/(cos_theta - cos_phi), falloff);
-			
-			attenuation = dist_atten * spot_atten;
+				//计算当前光源指向顶点方向和聚光灯光线方向的夹角Alpha的余弦值
+				float cos_alpha = saturate(dot(-dir_to_src, normalize(light.direction))	);
+				
+				//聚光灯内外锥的衰减
+				float spot_atten = 0.0f;
+				if( cos_alpha > cos_theta )
+					spot_atten = 1.0f;
+				else if ( cos_alpha > cos_phi )	//指数衰减
+					spot_atten = pow( (cos_alpha - cos_phi)/(cos_theta - cos_phi), falloff);
+				
+				attenuation = dist_atten * spot_atten;
+			}
+			else
+			{
+				attenuation = 0;
+			}
 		}
 	}
 	

@@ -123,6 +123,22 @@ namespace Pipe
             lights.Add(light);
         }
 
+        protected void QueryLights(Entity entity)
+        {
+            int used = 0;
+            
+            foreach (Light light in lights)
+            {
+                if(used > 4)
+                    return;
+                
+                if(light.Enabled && entity.ApplyLight(light))
+                {
+                    used = used + 1;
+                }
+            }
+        }
+
         public virtual void Update(GameTime gametime)
         {
             if (active_camera != null)
@@ -145,6 +161,8 @@ namespace Pipe
 
             foreach (Entity entity in entities)
             {
+                QueryLights(entity);
+                
                 entity.ApplyEnvInfo(env_info);
                 entity.Draw(gametime, active_camera);
             }
