@@ -15,8 +15,6 @@ namespace Pipe
             : base(engine)
         {
             m_ctx = new RenderContext(engine);
-
-            AddRenderContext(m_ctx);
         }
 
         public RenderContext Context
@@ -27,6 +25,8 @@ namespace Pipe
         public override void Initialize()
         {
             base.Initialize();
+            
+            AddRenderContext(m_ctx);
             
             Mesh mesh = MeshBuilder.CreateBox(Engine.GraphicsDevice);
             base.AddMesh(mesh);

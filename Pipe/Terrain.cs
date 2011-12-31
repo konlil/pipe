@@ -67,14 +67,14 @@ namespace Pipe
             if (!is_initialized)
                 return;
 
-            VertexDeclaration vd = new VertexDeclaration(Engine.GraphicsDevice, VertexPositionTexture.VertexElements);
+            VertexDeclaration vd = new VertexDeclaration(Engine.GraphicsDevice, VertexPositionNormalTexture.VertexElements);
 
-            VertexPositionTexture[] vertices =  CreateTerrainVertices();
+            VertexPositionNormalTexture[] vertices = CreateTerrainVertices();
             int[] indices = CreateTerrainIndicesForTriangleStrip();
 
             GenerateNormalForTriangleStrip(ref vertices, ref indices);
 
-            VertexBuffer vb = new VertexBuffer(Engine.GraphicsDevice, VertexPositionTexture.SizeInBytes * vertices.Length, BufferUsage.WriteOnly);
+            VertexBuffer vb = new VertexBuffer(Engine.GraphicsDevice, VertexPositionNormalTexture.SizeInBytes * vertices.Length, BufferUsage.WriteOnly);
             vb.SetData(vertices);
 
             IndexBuffer ib = new IndexBuffer(Engine.GraphicsDevice, typeof(int), indices.Length, BufferUsage.WriteOnly);
@@ -91,17 +91,18 @@ namespace Pipe
             ctx.Material = default_material;
             base.AddRenderContext(ctx);
 
-            default_material.DiffuseTextureName = "Textures\\terrain";
-            default_material.DetailTextureName = "Textures\\detail";
+            //default_material.DiffuseTextureName = "Textures\\terrain";
+            //default_material.DetailTextureName = "Textures\\detail";
+            default_material.DiffuseTextureName = "Textures\\grid_simple";
             default_material.FogEnabled = true;
             default_material.FogColor = new Color(0.5f, 0.5f, 0.5f).ToVector4();
-            default_material.DiffuseUVTile = new Vector2(1, 1);
-            default_material.DetailUVTile = new Vector2(128, 128);
+            default_material.DiffuseUVTile = new Vector2(32, 32);
+            //default_material.DetailUVTile = new Vector2(128, 128);
         }
 
-        private VertexPositionTexture[] CreateTerrainVertices()
+        private VertexPositionNormalTexture[] CreateTerrainVertices()
         {
-            VertexPositionTexture[] vertices = new VertexPositionTexture[terrain_width * terrain_height];
+            VertexPositionNormalTexture[] vertices = new VertexPositionNormalTexture[terrain_width * terrain_height];
 
             int i = 0;
             for(int z=0; z<terrain_height; z++)
@@ -113,15 +114,14 @@ namespace Pipe
 
                     Vector2 texcoord = new Vector2((float)x / terrain_width, (float)z / terrain_height);
 
-                    //vertices[i++] = new VertexPositionTexture(position, normal, texcoord);
-                    vertices[i++] = new VertexPositionTexture(position, texcoord);
+                    vertices[i++] = new VertexPositionNormalTexture(position, normal, texcoord);
                 }
             }
 
             return vertices;
         }
 
-        private int[] CreateTerrainIndicesForTriangleStrip()
+        public int[] CreateTerrainIndicesForTriangleStrip()
         {
             int[] indices = new int[terrain_width * 2 * (terrain_height - 1)];
 
@@ -153,9 +153,9 @@ namespace Pipe
             return indices;
         }
 
-        private void GenerateNormalForTriangleStrip(ref VertexPositionTexture[] vertices, ref int[] indices)
+        private void GenerateNormalForTriangleStrip(ref VertexPositionNormalTexture[] vertices, ref int[] indices)
         {
-           /* for (int i = 0; i < vertices.Length; i++)
+           for (int i = 0; i < vertices.Length; i++)
                 vertices[i].Normal = new Vector3(0, 0, 0);
 
             bool swap_winding = false;
@@ -182,7 +182,6 @@ namespace Pipe
 
             for (int i = 0; i < vertices.Length; i++)
                 vertices[i].Normal.Normalize();
-            */
         }
     }
 }

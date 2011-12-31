@@ -125,16 +125,12 @@ namespace Pipe
 
         protected void QueryLights(Entity entity)
         {
-            int used = 0;
-            
+            entity.ClearLights();
             foreach (Light light in lights)
             {
-                if(used > 4)
-                    return;
-                
-                if(light.Enabled && entity.ApplyLight(light))
+                if(light.Enabled && light.IsInRange(entity.Pose.position) )
                 {
-                    used = used + 1;
+                    entity.ApplyLight(light);
                 }
             }
         }

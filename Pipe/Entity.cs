@@ -9,17 +9,18 @@ namespace Pipe
 {
     public abstract class Entity : Object3d
     {
+        protected const int MAX_LIGHTS = 4;
+
         protected List<Mesh> meshes;
         protected List<IMaterial> materials;
         protected List<RenderContext> render_contexts;
+        //protected List<Light> valid_lights;
+
+        protected int light_count;
 
         public Entity(PipeEngine engine) : base(engine)
         {
             IsVisible = true;
-
-            meshes = new List<Mesh>();
-            materials = new List<IMaterial>();
-            render_contexts = new List<RenderContext>();
         }
 
         internal virtual void LoadContent()
@@ -31,6 +32,13 @@ namespace Pipe
         {
             if (Engine.GraphicsDevice.IsDisposed)
                 return;
+
+            light_count = 0;
+
+            meshes = new List<Mesh>();
+            materials = new List<IMaterial>();
+            render_contexts = new List<RenderContext>();
+            //valid_lights = new List<Light>();
 
             LoadContent();
             IsInitialized = true;
@@ -86,7 +94,7 @@ namespace Pipe
             return render_contexts.Count - 1;
         }
 
-        public void ApplyEnvInfo(EnvInfo info)
+        public virtual void ApplyEnvInfo(EnvInfo info)
         {
             foreach(RenderContext rc in render_contexts)
             {
@@ -94,19 +102,20 @@ namespace Pipe
             }
         }
 
-        public void ApplyLight(Light light)
+        public virtual void ClearLights()
         {
-            if(light.IsInRange(pose.position))
-            {
-                foreach(RenderContext rc in render_contexts)
-                {
-                    IMaterial imaterial = rc.Material;
-                    if( imaterial != null )
-                    {
-                        imaterial.SetLightInfo()
-                    }
-                }
-            }
+            light_count = 0;
+        }
+
+        public virtual bool ApplyLight(Light light)
+        {
+            if (light_count > MAX_LIGHTS)
+                return false;
+
+            light.Accept(light_count);
+
+            light_count = light_count + 1;
+            return true;
         }
         
         public virtual int Draw(GameTime gametime, Camera camera)

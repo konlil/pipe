@@ -21,6 +21,8 @@ namespace Pipe
         protected float fog_end;
 
         protected EnvInfo env_info;
+        protected Light light_info;
+        protected int light_id;
 
         public BaseMaterial(PipeEngine engine, string effect_name)
         {
@@ -98,6 +100,13 @@ namespace Pipe
             ApplyEnvInfo();
         }
 
+        public void ApplyLight(int index, Light info)
+        {
+            light_id = index;
+            light_info = info;
+            ApplyLightInfo();
+        }
+
         protected void ApplyEnvInfo()
         {
             EffectInstance.Parameters["AmbientColor"].SetValue(env_info.ambient_color);
@@ -112,6 +121,11 @@ namespace Pipe
             {
                 cam_pos.SetValue(env_info.camera_position);
             }
+        }
+
+        protected void ApplyLightInfo()
+        {
+
         }
 
         #endregion

@@ -25,6 +25,6 @@ namespace Pipe
         void SetProjectionMatrix(Matrix projection);
         
         void SetEnvInfo(EnvInfo fog_info);
-        void SetLightInfo(LightInfo light_info);
+        void ApplyLight(int index, Light light);
     }
 }

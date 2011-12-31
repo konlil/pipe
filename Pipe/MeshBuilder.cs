@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Pipe.BaseDefine;
@@ -10,6 +11,8 @@ namespace Pipe
 {
     public class MeshBuilder
     {
+        private static Model SphereModel;
+
         public static Mesh CreateAxis(GraphicsDevice device)
         {
             VertexPositionColor[] vertices = new VertexPositionColor[6];
@@ -19,7 +22,7 @@ namespace Pipe
             vertices[2] = new VertexPositionColor(new Vector3(0, 0, 0), Color.Green);
             vertices[3] = new VertexPositionColor(new Vector3(0, 1, 0), Color.Green);
             vertices[4] = new VertexPositionColor(new Vector3(0, 0, 0), Color.Blue);
-            vertices[5] = new VertexPositionColor(new Vector3(0, 0, -1), Color.Blue);
+            vertices[5] = new VertexPositionColor(new Vector3(0, 0, -3), Color.Blue);
 
             VertexBuffer vb = new VertexBuffer(device, typeof(VertexPositionColor), 6, BufferUsage.WriteOnly);
             vb.SetData(vertices, 0, 6);
@@ -248,6 +251,17 @@ namespace Pipe
             ib.SetData(indices);
 
             return new Mesh(PrimitiveType.TriangleList, vb, vd, ib);
+        }
+
+        public static Mesh CreateSphere(GraphicsDevice device, ContentManager content)
+        {
+            SphereModel = content.Load<Model>("Models\\SphereLowPoly");
+
+            VertexBuffer vb = SphereModel.Meshes[0].VertexBuffer;
+            IndexBuffer ib = SphereModel.Meshes[0].IndexBuffer;
+            VertexDeclaration vd = SphereModel.Meshes[0].MeshParts[0].VertexDeclaration;
+
+            return new Mesh(PrimitiveType.TriangleStrip, vb, vd, ib);
         }
     }
 }

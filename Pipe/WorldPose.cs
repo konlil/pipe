@@ -46,6 +46,13 @@ namespace Pipe
             RebuildWorldMatrix();
         }
 
+        public void SetRotation(ref Matrix rot)
+        {
+            rotation = Quaternion.CreateFromRotationMatrix(rot);
+            rotation_matrix = rot;
+            RebuildWorldMatrix();
+        }
+
         public void SetPosition(float x, float y, float z)
         {
             position = new Vector3(x, y, z);

@@ -64,12 +64,12 @@ namespace TestGame1
             axis.Pose.SetScale(10, 10, 10);
 
             ////////////////////////////////我是忧郁的分割线//////////////////////////////////////////
-            Terrain terrain = new Terrain(this, "Textures\\heightmap2", null);
+            Terrain terrain = new Terrain(this, "Textures\\flat_map", null);
             terrain.Initialize();
             scene.AddEntity(terrain);
 
-            //camera.Target = new Vector3(terrain.WidthInPixel / 2.0f, 0, -terrain.HeightInPixel / 2.0f);
-            camera.Target = new Vector3(0, 0, 0);
+            camera.Target = new Vector3(terrain.WidthInPixel / 2.0f, 0, -terrain.HeightInPixel / 2.0f);
+            //camera.Target = new Vector3(0, 0, 0);
 
             //////////////////////////////////////////////////////////////////////////
             //Quad s1 = new Quad(this);
@@ -88,23 +88,64 @@ namespace TestGame1
             //a1.pose.SetScale(0.01f, 0.01f, 0.01f);
 
             //////////////////////////////////////////////////////////////////////////
-            //Light l1 = new Light(this, new Vector3(1.0f, 0.0f, 0.0f), new Vector3(1.0f, -1.0f, -1.0f));
-            //scene.AddLight(l1);
+            Light l1 = new Light(this, new Vector3(0.0f, 1.0f, 0.0f), new Vector3(1.0f, -1.0f, -1.0f));
+            scene.AddLight(l1);
 
             //////////////////////////////////////////////////////////////////////////
             Box b1 = new Box(this);
             b1.Initialize();
-            scene.AddEntity(b1);
-
             b1.SetScale(10.0f, 10.0f, 10.0f);
             b1.SetPosition(100, 10, -100);
+            scene.AddEntity(b1);
 
             Box b2 = new Box(this);
             b2.Initialize();
-            scene.AddEntity(b2);
-
             b2.SetScale(10, 10, 10);
             b2.SetPosition(150, 10, -150);
+            scene.AddEntity(b2);
+
+            //////////////////////////////////////////////////////////////////////////
+            float bx = 200;
+            float by = 20;
+            float bz = -200;
+
+           // Sphere s1 = new Sphere(this);
+           // s1.Initialize();
+           // s1.SetScale(10, 10, 10);
+           // s1.SetPosition(bx + 0.0442591f, by + 0.017970f, bz + 0.045182f);
+           // s1.ModelFile = "Models\\SphereLowPoly";
+           // scene.AddEntity(s1);
+
+            Axis a1 = new Axis(this);
+            a1.Initialize();
+            a1.SetScale(10, 10, 10);
+            Matrix rot = new Matrix();
+            rot.M11 = 9.9994452992e-001f; rot.M12 = 2.8077475493e-003f; rot.M13 = 1.0151533926e-002f;
+            rot.M21 = -2.8522679263e-003f; rot.M22 = 9.9998636727e-001f; rot.M23 = 4.3737664750e-003f;
+            rot.M31 = -1.0139115101e-002f; rot.M32 = -4.4024787564e-003f; rot.M33 = 9.9993890640e-001f;
+            a1.SetRotation(rot);
+            a1.SetPosition(bx + 0.0442591f, by + 0.017970f, bz + 0.045182f);
+            scene.AddEntity(a1);
+
+            //Sphere s2 = new Sphere(this);
+            //s2.Initialize();
+            //s2.SetScale(10, 10, 10);
+            //s2.SetPosition(bx -0.028148f, by -0.875799f, bz-0.436862f);
+            //s2.ModelFile = "Models\\SphereLowPoly";
+            //scene.AddEntity(s2);
+
+            Axis a2 = new Axis(this);
+            a2.Initialize();
+            a2.SetScale(10, 10, 10);
+            Matrix rot2 = new Matrix();
+            rot2.M11 = 9.9927846095e-001f; rot2.M12 = -2.9406460387e-002f; rot2.M13 = -2.4037836360e-002f;
+            rot2.M21 = 2.3013993637e-002f; rot2.M22 = 9.7227461380e-001f; rot2.M23 = -2.3270674991e-001f;
+            rot2.M31 = 3.0214459887e-002f; rot2.M32 = 2.3198563629e-001f; rot2.M33 = 9.7224983979e-001f;
+            a1.SetRotation(rot2);
+            a2.SetPosition(bx-0.028148f, by-0.875799f, bz-0.436862f);
+            scene.AddEntity(a2);
+
+            //////////////////////////////////////////////////////////////////////////
 
             GenericMaterial mat_b2 = new GenericMaterial(this, "Effects\\generic");
             mat_b2.CurrentTechniqueName = "TGeneric";

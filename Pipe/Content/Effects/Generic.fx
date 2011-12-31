@@ -60,8 +60,8 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	float3 normal = normalize(input.WorldNormal);
 	for(int i=0; i < MAX_TOTAL_LIGHTS; i++)
 	{
-		//if( Lights[i].enabled )
-		final += CalcSingleLight( Lights[i], input.WorldPosition, normal, diffuse, MaterialSpecular, MaterialSpecPower);
+		if( Lights[i].enabled )
+			final += CalcSingleLight( Lights[i], input.WorldPosition, normal, diffuse, MaterialSpecular, MaterialSpecPower);
 	}
 	
 	//环境光 & 漫反射

@@ -38,5 +38,10 @@ namespace Pipe
             Engine.GraphicsDevice.RenderState.CullMode = CullMode.None;
             return base.Draw(gametime, camera);
         }
+
+        public void ShowAxis(bool x, bool y, bool z)
+        {
+            
+        }
     }
 }

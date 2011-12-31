@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using System.Diagnostics;
 
 namespace Pipe
 {
@@ -62,9 +63,9 @@ namespace Pipe
         private void ResetCamera()
         {
             target = new Vector3(0, 0, 0);
-            offset = new Vector3(0, 80, 100);
+            offset = new Vector3(0, -80, 100);
 
-            target_pitch = 0.0f;
+            target_pitch = 60.0f;
             target_yaw = 0.0f;
 
             position = target + offset;
@@ -87,9 +88,8 @@ namespace Pipe
                 float dx = Input.MouseDeltaX;
                 float dy = Input.MouseDeltaY;
 
-                target_yaw += dx * rotation_speed;
-                //target_pitch += dy * rotation_speed;
-                offset.Y += dy * moving_speed; 
+                target_yaw -= dx * rotation_speed;
+                target_pitch += dy * rotation_speed;
             }
 
             //engine.DebugConsole.WriteLine(string.Format("wheel delta: {0}", Input.MouseWheelDelta));
@@ -107,8 +107,7 @@ namespace Pipe
 
             if(Input.Keyboard.IsKeyDown(Keys.S))
             {
-                Matrix forward_movement = Matrix.CreateRotationY(target_yaw);
-                //forward_movement *= Matrix.CreateRotationX(target_pitch);
+                Matrix forward_movement = Matrix.CreateRotationX(target_pitch)*Matrix.CreateRotationY(target_yaw);
                 Vector3 v = new Vector3(0, 0, moving_speed);
                 v = Vector3.Transform(v, forward_movement);
                 target.Z += v.Z;
@@ -117,8 +116,7 @@ namespace Pipe
 
             if(Input.Keyboard.IsKeyDown(Keys.W))
             {
-                Matrix forward_movement = Matrix.CreateRotationY(target_yaw);
-                //forward_movement *= Matrix.CreateRotationX(target_pitch);
+                Matrix forward_movement = Matrix.CreateRotationX(target_pitch)*Matrix.CreateRotationY(target_yaw);
                 Vector3 v = new Vector3(0, 0, -moving_speed);
                 v = Vector3.Transform(v, forward_movement);
                 target.Z += v.Z;
@@ -127,9 +125,8 @@ namespace Pipe
 
             if(Input.Keyboard.IsKeyDown(Keys.D))
             {
-                Matrix forward_movement = Matrix.CreateRotationY(target_yaw);
-                //forward_movement *= Matrix.CreateRotationX(target_pitch);
-                Vector3 v = new Vector3(moving_speed, 0, 0);
+                Matrix forward_movement = Matrix.CreateRotationX(target_pitch)*Matrix.CreateRotationY(target_yaw);
+                Vector3 v = new Vector3(-moving_speed, 0, 0);
                 v = Vector3.Transform(v, forward_movement);
                 target.Z += v.Z;
                 target.X += v.X;
@@ -137,9 +134,8 @@ namespace Pipe
 
             if(Input.Keyboard.IsKeyDown(Keys.A))
             {
-                Matrix forward_movement = Matrix.CreateRotationY(target_yaw);
-                //forward_movement *= Matrix.CreateRotationX(target_pitch); 
-                Vector3 v = new Vector3(-moving_speed, 0, 0);
+                Matrix forward_movement = Matrix.CreateRotationX(target_pitch)*Matrix.CreateRotationY(target_yaw);
+                Vector3 v = new Vector3(moving_speed, 0, 0);
                 v = Vector3.Transform(v, forward_movement);
                 target.Z += v.Z;
                 target.X += v.X;
@@ -148,7 +144,7 @@ namespace Pipe
 
         private void UpdateThirdPersion()
         {
-            Matrix rot = Matrix.CreateRotationY(target_yaw);
+            Matrix rot = Matrix.CreateRotationX(target_pitch)*Matrix.CreateRotationY(target_yaw);
             Vector3 transformed_offset = Vector3.Transform(offset, rot);
 
             position = target + transformed_offset;
@@ -157,6 +153,9 @@ namespace Pipe
 
         public void Update(GameTime gametime)
         {
+            if (Input.Keyboard.IsKeyDown(Keys.Space))
+                ResetCamera();
+
             UpdateTarget();
             UpdateThirdPersion();    
         }

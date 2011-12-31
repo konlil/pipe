@@ -32,13 +32,18 @@ namespace Pipe
 
         private float MsCostThisFrame = 0;
         private float MsTotalCost = 0;
-        private float MsTickThisFrame = 0;
+        private float MsRenderTickThisFrame = 0;
         private int FrameCountThisScecond = 0;
         private int FrameCountTotal = 0;
         private int fps = 0;
 
+        private int logic_fps = 60;
+        private float MsLogicCostThisFrame = 0;
+
         private DGuiManager gui_manager;
         private readonly SceneManager scm;
+
+        private Effect base_effect;
 
         private ConsoleComponent console;
 
@@ -105,6 +110,11 @@ namespace Pipe
             get { return fps;  }
         }
 
+        public Effect BaseEffect
+        {
+            get { return base_effect; }
+        }
+
         public ConsoleComponent DebugConsole
         {
             get { return console; }
@@ -129,6 +139,7 @@ namespace Pipe
             spriteBatch = new SpriteBatch(GraphicsDevice);
             spriteFont = Content.Load<SpriteFont>("Fonts\\default_font");
             cursor = Content.Load<Texture2D>("Textures\\MouseCursor");
+            base_effect = Content.Load<Effect>("Effects\\base");
 
             GraphicsDevice.RenderState.FogEnable = false;
             GraphicsDevice.RenderState.FillMode = FillMode.WireFrame;
@@ -189,10 +200,17 @@ namespace Pipe
         {
             console.Clear();
 
-            Input.Update();
-            gui_manager.Update(gameTime);
+            MsLogicCostThisFrame += (float)gameTime.ElapsedRealTime.TotalMilliseconds;
 
-            scm.Update(gameTime);
+            if(MsLogicCostThisFrame >= (float)1000.0/logic_fps)
+            {
+                Input.Update();
+                gui_manager.Update(gameTime);
+
+                scm.Update(gameTime);
+
+                MsLogicCostThisFrame = 0;
+            }
 
             base.Update(gameTime);
         }
@@ -209,10 +227,10 @@ namespace Pipe
             FrameCountThisScecond++;
             FrameCountTotal++;
 
-            if( MsTotalCost - MsTickThisFrame > 1000.0f )
+            if( MsTotalCost - MsRenderTickThisFrame > 1000.0f )
             {
-                fps = (int)(FrameCountThisScecond * 1000.0f / (MsTotalCost - MsTickThisFrame));
-                MsTickThisFrame = MsTotalCost;
+                fps = (int)(FrameCountThisScecond * 1000.0f / (MsTotalCost - MsRenderTickThisFrame));
+                MsRenderTickThisFrame = MsTotalCost;
                 FrameCountThisScecond = 0;
             }
         }

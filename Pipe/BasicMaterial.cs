@@ -22,6 +22,7 @@ namespace Pipe
         protected float fog_end;
 
         protected EnvInfo env_info;
+        protected Light light_info;
 
         public BasicMaterial(PipeEngine engine)
         {
@@ -138,6 +139,11 @@ namespace Pipe
         public void SetEnvInfo(EnvInfo info)
         {
             env_info = info;
+        }
+
+        public void ApplyLight(int index, Light info)
+        {
+            light_info = info;
         }
 
         #endregion

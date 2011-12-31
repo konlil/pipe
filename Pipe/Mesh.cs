@@ -10,7 +10,7 @@ namespace Pipe
     {
         private VertexBuffer vb;
         private IndexBuffer ib;
-        private VertexDeclaration vt_decl;
+        private VertexDeclaration vd;
         private PrimitiveType primitive_type;
         private DrawMode draw_mode;
 
@@ -33,7 +33,7 @@ namespace Pipe
             this.draw_mode = DrawMode.Primitive;
             this.primitive_type = pt;
             this.vb = vb;
-            this.vt_decl = vd;
+            this.vd = vd;
             this.primitive_count = CalcPrimitiveCount();
         }
 
@@ -51,7 +51,7 @@ namespace Pipe
             this.draw_mode = DrawMode.Indexed;
             this.primitive_type = pt;
             this.vb = vb;
-            this.vt_decl = vd;
+            this.vd = vd;
             this.ib = ib;
             this.primitive_count = CalcPrimitiveCount();
         }
@@ -70,7 +70,7 @@ namespace Pipe
 
         public IndexBuffer IndexBuffer { get { return ib; } }
 
-        public VertexDeclaration VertexDecl { get { return vt_decl; } }
+        public VertexDeclaration VertexDecl { get { return vd; } }
 
         public bool Visible
         {
@@ -132,8 +132,8 @@ namespace Pipe
 
         public void PreRender(GraphicsDevice device)
         {
-            device.VertexDeclaration = vt_decl;
-            device.Vertices[0].SetSource(vb, 0, vt_decl.GetVertexStrideSize(0));
+            device.VertexDeclaration = vd;
+            device.Vertices[0].SetSource(vb, 0, vd.GetVertexStrideSize(0));
             if(draw_mode == DrawMode.Indexed)
                 device.Indices = ib;
         }

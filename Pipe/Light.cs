@@ -24,8 +24,12 @@ namespace Pipe
         /// </summary>
         Spot,
     }
+
     public class Light
     {
+        private PipeEngine engine;
+
+        private int accept_id;
         private bool enabled;
 
         private Vector3 color;
@@ -85,11 +89,10 @@ namespace Pipe
 
         public Light(PipeEngine engine, LightType lt, Vector3 color, Vector3 position, Vector3 direction, float range, float fallof, float theta, float phi)
         {
-            //instance_param = engine.BaseEffect.Parameters["gLights"].Elements[SceneManager.TotalLights];
-           // position_param = instance_param.StructureMembers["position"];
+            this.engine = engine;
 
             this.light_type = lt;
-            instance_param.StructureMembers["light_type"].SetValue((float)light_type);
+            
             this.color = color;
             this.position = position;
             this.enabled = true;
@@ -97,7 +100,6 @@ namespace Pipe
             this.spot_prop.Y = fallof;
             this.spot_prop.Z = theta;
             this.spot_prop.W = phi;
-            instance_param.StructureMembers["spot_prop"].SetValue(spot_prop);
         }
 
         public LightType LightType { get { return light_type; } }
@@ -108,10 +110,6 @@ namespace Pipe
             set
             {
                 enabled = value;
-                if (enabled)
-                    instance_param.StructureMembers["enabled"].SetValue(1.0f);
-                else
-                    instance_param.StructureMembers["enabled"].SetValue(0.0f);
             }
         }
 
@@ -121,7 +119,6 @@ namespace Pipe
             set
             {
                 color = value;
-                instance_param.StructureMembers["color"].SetValue(color);
             }
         }
 
@@ -131,12 +128,6 @@ namespace Pipe
             set
             {
                 position = value;
-                this.position_param.SetValue(position);
-                if( light_type == LightType.Directional )
-                {
-                    direction = -position;
-                    instance_param.StructureMembers["direction"].SetValue(direction);
-                }
             }
         }
 
@@ -146,11 +137,6 @@ namespace Pipe
             set
             {
                 direction = value;
-                instance_param.StructureMembers["direction"].SetValue(direction);
-                if( light_type == LightType.Directional )
-                {
-                    position = -direction;
-                }
             }
         }
 
@@ -160,7 +146,6 @@ namespace Pipe
             set
             {
                 spot_prop.X = value;
-                instance_param.StructureMembers["spot_prop"].SetValue(spot_prop);
             }
         }
 
@@ -170,7 +155,6 @@ namespace Pipe
             set
             {
                 spot_prop.Y = value;
-                instance_param.StructureMembers["spot_prop"].SetValue(spot_prop);
             }
         }
 
@@ -180,7 +164,6 @@ namespace Pipe
             set
             {
                 spot_prop.Z = value;
-                instance_param.StructureMembers["spot_prop"].SetValue(spot_prop);
             }
         }
 
@@ -190,8 +173,44 @@ namespace Pipe
             set
             {
                 spot_prop.W = value;
-                instance_param.StructureMembers["spot_prop"].SetValue(spot_prop);
             }
+        }
+
+        public bool IsInRange(Vector3 pos)
+        {
+            return true;
+        }
+
+        public bool Accept(int idx)
+        {
+            instance_param = engine.BaseEffect.Parameters["Lights"].Elements[idx];
+            position_param = instance_param.StructureMembers["position"];
+
+            if (enabled)
+                instance_param.StructureMembers["enabled"].SetValue(1.0f);
+            else
+                instance_param.StructureMembers["enabled"].SetValue(0.0f);
+
+            instance_param.StructureMembers["type"].SetValue((float)light_type);
+
+            instance_param.StructureMembers["color"].SetValue(color);
+
+            this.position_param.SetValue(position);
+            if (light_type == LightType.Directional)
+            {
+                direction = -position;
+                instance_param.StructureMembers["direction"].SetValue(direction);
+            }
+
+            instance_param.StructureMembers["direction"].SetValue(direction);
+            if (light_type == LightType.Directional)
+            {
+                position = -direction;
+            }
+
+            instance_param.StructureMembers["spot_data"].SetValue(spot_prop);
+
+            return true;
         }
     }
 }

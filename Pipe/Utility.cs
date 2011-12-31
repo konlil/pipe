@@ -62,7 +62,7 @@ namespace Pipe
                 for(int y=0; y< terrain_height; y++)
                 {
                     if (max_height == min_height)
-                        height_data[x, y] = height_limit;
+                        height_data[x, y] = Math.Min(min_height, height_limit);
                     else
                         height_data[x, y] = (height_data[x, y] - min_height) / (max_height - min_height) * height_limit;
                 }

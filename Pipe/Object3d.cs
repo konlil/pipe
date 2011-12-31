@@ -16,7 +16,7 @@ namespace Pipe
         protected bool is_initialized;
 
         internal List<IController> controllers = new List<IController>();
-
+        
         public Object3d(PipeEngine engine)
         {
             this.engine = engine;
@@ -80,6 +80,13 @@ namespace Pipe
         public void SetPosition(float px, float py, float pz)
         {
             this.pose.SetPosition(px, py, pz);
+        }
+
+        public void SetRotation(Matrix rot)
+        {
+            rot.M41 = rot.M42 = rot.M43 = 0.0f;
+            rot.M44 = 1.0f;
+            this.pose.SetRotation(ref rot);
         }
 
         public virtual void Update(GameTime gametime)
